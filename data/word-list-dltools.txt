@@ -1,0 +1,11 @@
+caffe
+chainer
+cntk
+deeplearning4j
+keras
+mxnet
+pytorch
+tensorflow
+theano
+torch
+dynet
