@@ -1,6 +1,6 @@
 # ACL Investigator
 
-A tool to count how many ACL papers include specific keywords.
+A tool to count how many ACL papers including specific keywords.
 
 ## Development Environment
 
@@ -19,3 +19,9 @@ $ python src/run.py data/word-list-dltools.txt \
 ```
 
 See command line help for other options.
+
+
+## TODO
+
+- Parallelization
+- Visualization
