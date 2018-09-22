@@ -11,15 +11,34 @@ A tool to count how many ACL papers including specific keywords.
 
 ## How to Run
 
+You should prepare a word list in advance.
+An example file `wordlist-dltools.txt` is in the `data` directory.
+
+First, run the following script.
+Crawling ACL Anthology, this builds a json file which include the information of word occurrence.
+The output for `wordlist-dltools.txt` is also in the `data` directory.
+
 ```
-$ python src/run.py data/word-list-dltools.txt \
+$ python src/run_crawler.py data/wordlist-dltools.txt \
 --year 16,17,18 \  # the year of conferences
 --type ls \  # the type of submission ("l" and "s" indicate long and short paper respectively)
---out result.json  # the output will be given as a json file
+--out data/result-dltools.json  # the output will be given as a json file
+--jobs 100  # number of jobs
 ```
+
+Finally, run the following script to visualize the result.
+
+```
+$ python src/run_visualizer.py data/word-list-dltools.txt  data/result-dltools.json \
+--output data/pointplot-dltools.png
+```
+
+You will get this figure:
+![pointplot-dltools.png](./data/pointplot-dltools.png)
 
 See command line help for other options.
 
 TODO:
 
 - phrase search
+- stop crawling after detecting 404
