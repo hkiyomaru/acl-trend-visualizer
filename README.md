@@ -38,7 +38,12 @@ You will get this figure:
 
 See command line help for other options.
 
-TODO:
+## Why don't you use results of Google search?
+
+Because it costs money.
+
+## TODO
 
 - phrase search
 - stop crawling after detecting 404
+- deal with other related conferences such as NAACL, EMNLP, and so on.
