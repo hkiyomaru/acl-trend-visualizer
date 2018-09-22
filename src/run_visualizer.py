@@ -11,7 +11,7 @@ def main():
     parser.add_argument('WORDLIST', help='path to a word list file')
     parser.add_argument('RESULTS', help='path to a result file')
     parser.add_argument('--output', default=".",
-                        help='path to the output directory')
+                        help='path to the output file')
     args = parser.parse_args()
 
     words = load_word_list(args.WORDLIST)

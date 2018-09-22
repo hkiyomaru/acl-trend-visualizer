@@ -22,7 +22,7 @@ class Visualizer(object):
         df = df.melt("year", var_name="cols", value_name="counts")
         ax = sns.pointplot(x="year", y="counts", hue="cols", data=df, palette="bright")
         fig = ax.get_figure()
-        fig.savefig(os.path.join(out, 'pointplot.png'))
+        fig.savefig(out)
 
     def preprocess(self, results):
         results = pandas.DataFrame(results)

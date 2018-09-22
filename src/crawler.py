@@ -17,7 +17,7 @@ URL_FORMAT = "http://aclweb.org/anthology/P{year}-{ptype}{pid:03d}"
 
 class Crawler(object):
 
-    def __init__(self, years, ptypes, max_pid=10):
+    def __init__(self, years, ptypes, max_pid=300):
         """
 
         :param years: a list of strings which indicate years to gather.
