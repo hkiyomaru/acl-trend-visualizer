@@ -29,7 +29,6 @@ class Investigator(object):
         assert len(set(ptypes) - set("sl")) == 0, "Invalid ptypes were specified: %s" % ptypes
         self.params = [{'year': year, 'ptype': ptype, 'pid': pid}
                        for year in years.split(",") for ptype in ptypes for pid in range(1, max_pid)]
-        self.verbose = verbose
 
     def search(self, words, out, tmp_dir="tmp", jobs=1):
         os.makedirs(tmp_dir, exist_ok=True)
@@ -48,8 +47,7 @@ class Investigator(object):
             url = URL_FORMAT.format(
                 year=param['year'],
                 ptype=self._make_ptype(param['ptype']),  # "l" -> 1, "s" -> 2
-                pid=param['pid']
-            )
+                pid=param['pid'])
             basename = os.path.basename(url)
             path_paper = os.path.join(tmp_dir, basename)
             ok = self._save_paper(url, path_paper)
@@ -66,8 +64,8 @@ class Investigator(object):
 
     def _check_words(self, words, path):
 
-        def convert_to_text():
-            with open(path, "rb") as f:
+        def convert_pdf_to_text(_path):
+            with open(_path, "rb") as f:
                 resource_manager = PDFResourceManager()
                 outfp = StringIO()
                 codec = "utf-8"
@@ -79,7 +77,7 @@ class Investigator(object):
                     interpreter.process_page(page)
                 return self._clean_text(outfp.getvalue())
 
-        text = convert_to_text()
+        text = convert_pdf_to_text(path)
         word_list = set(text.split())
         return [word for word in words if word in word_list]
 
