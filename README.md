@@ -44,6 +44,4 @@ Because it costs money.
 
 ## TODO
 
-- phrase search
-- stop crawling after detecting 404
 - deal with other related conferences such as NAACL, EMNLP, and so on.
