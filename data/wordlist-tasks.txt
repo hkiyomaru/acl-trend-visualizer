@@ -1,0 +1,32 @@
+# https://github.com/sebastianruder/NLP-progress
+ASR
+CCG supertagging
+Chunking
+Constituency parsing
+Coreference resolution
+Dependency parsing
+Dialog
+Domain adaptation
+Entity Linking
+Grammatical Error Correction
+Information Extraction
+Language modeling
+Machine translation
+Multi-task learning
+Multimodal
+Named entity recognition
+Natural language inference
+Part-of-speech tagging
+Question answering
+Relation Prediction
+Relationship extraction
+Semantic textual similarity
+Sentiment analysis
+Semantic parsing
+Semantic role labeling
+Stance detection
+Summarization
+Taxonomy learning
+Temporal Processing
+Text classification
+Word Sense Disambiguation
