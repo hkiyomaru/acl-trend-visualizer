@@ -1,4 +1,4 @@
-"""Main script."""
+"""Main script to run a crawler."""
 import argparse
 
 from investigator import Investigator
