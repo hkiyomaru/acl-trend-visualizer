@@ -62,6 +62,9 @@ class Crawler(object):
 
     def _check_words(self, words, path):
 
+        def build_ngram(l, n):
+            return [' '.join(ngram) for ngram in list(zip(*(l[i:] for i in range(n))))]
+
         def convert_pdf_to_text(_path):
             with open(_path, "rb") as f:
                 resource_manager = PDFResourceManager()
@@ -76,12 +79,13 @@ class Crawler(object):
                 return self._clean_text(outfp.getvalue())
 
         try:
-            text = convert_pdf_to_text(path)
+            ptext = convert_pdf_to_text(path)
         except Exception as e:
             print(e, file=sys.stderr)
-            text = ""
-        word_list = set(text.split())
-        return [word for word in words if word in word_list]
+            ptext = ""
+
+        pword_list = ptext.split()
+        return [word for word in words if word in build_ngram(pword_list, len(word.split()))]
 
     @staticmethod
     def _clean_text(text):
