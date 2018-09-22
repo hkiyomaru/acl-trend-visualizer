@@ -18,13 +18,15 @@ def main():
                         help='submission types ("l" (long), "s" (short), or "ls")')
     parser.add_argument('--tmp-dir', default="tmp",
                         help='path to save pdf files temporarily')
+    parser.add_argument('-j', '--jobs', default=1, type=int,
+                        help='number of jobs')
     parser.add_argument('--output', default="result.json",
                         help='path to the output file')
     args = parser.parse_args()
 
     investigator = Investigator(args.year, args.type)
     word_list = load_word_list(args.WORDLIST)
-    investigator.search(word_list, args.output, tmp_dir=args.tmp_dir)
+    investigator.search(word_list, args.output, tmp_dir=args.tmp_dir, jobs=args.jobs)
 
 
 if __name__ == '__main__':
