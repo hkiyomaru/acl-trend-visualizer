@@ -4,7 +4,8 @@ import json
 
 def load_word_list(path):
     with open(path) as f:
-        return [line.strip() for line in f if line.strip() != ""]
+        return [line.strip().lower() for line in f
+                if line.strip() != "" and not line.startswith("#")]
 
 
 def load_results(path):
