@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('WORDLIST', help='path to a word list file')
     parser.add_argument('RESULTS', help='path to a result file')
-    parser.add_argument('--output', default=".",
+    parser.add_argument('--output', default="pointplot.png",
                         help='path to the output file')
     args = parser.parse_args()
 
