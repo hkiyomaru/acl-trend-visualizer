@@ -33,8 +33,11 @@ $ python src/run_visualizer.py data/word-list-dltools.txt  data/result-dltools.j
 --output data/pointplot-dltools.png
 ```
 
-You will get this figure:
+You will get:
 ![pointplot-dltools.png](./data/pointplot-dltools.png)
+
+The result for `data/pointplot-tasks.png` is:
+![pointplot-tasks.png](./data/pointplot-tasks.png)
 
 See command line help for other options.
 
