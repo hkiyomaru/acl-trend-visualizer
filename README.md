@@ -20,8 +20,6 @@ $ python src/run.py data/word-list-dltools.txt \
 
 See command line help for other options.
 
+TODO:
 
-## TODO
-
-- Parallelization
-- Visualization
+- phrase search
