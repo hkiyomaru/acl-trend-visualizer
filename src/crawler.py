@@ -100,7 +100,7 @@ class Crawler(object):
 
     @staticmethod
     def _clean_text(text):
-        return text.replace("-\n", "").replace("\n", "").lower()
+        return text.replace("-\n", "").replace("\n", " ").lower()
 
     @staticmethod
     def _save_paper(url, path):
