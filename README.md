@@ -1,4 +1,4 @@
-# ACL Investigator
+# ACL Trend Visualizer
 
 A tool to count the number of ACL papers including specific words.
 
