@@ -1,32 +1,37 @@
 """Crawler for ACL Anthology."""
+from io import StringIO
 import multiprocessing
 import os
-import requests
 import sys
 
+import requests
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
-from io import StringIO
 
 
-URL_FORMAT = "http://aclweb.org/anthology/P{year}-{ptype}{pid:03d}"
+URL_FORMAT = "http://aclweb.org/anthology/{conference}{year}-{ptype}{pid:03d}"
 
 
 class Crawler(object):
 
-    def __init__(self, years, ptypes):
+    def __init__(self, conferences, years, ptypes):
         """
 
-        :param years: a list of strings which indicate years to gather.
+        :param conferences: a string which indicates conferences.
+        :param years: a string which indicates years to gather.
         :param ptypes: a string which indicates submission type ("l" (long), "s" (short), or "lt").
 
         """
-        assert len(set(ptypes) - set("sl")) == 0, "Invalid ptypes were specified: %s" % ptypes
-        self.params = [{"year": year, "ptype": ptype, "pid": pid}
-                       for year in years.split(",") for ptype in ptypes for pid in range(1, 1000)]
+        conferences = self.replace_conferences(conferences)
+        ptypes = self.replace_ptype(ptypes)
+        self.params = [{"conference": conference, "year": year, "ptype": ptype, "pid": pid}
+                       for conference in conferences.split(",")
+                       for year in years.split(",")
+                       for ptype in ptypes.split(",")
+                       for pid in range(1, 1000)]
 
     def search(self, words, tmp_dir="tmp", jobs=1):
         os.makedirs(tmp_dir, exist_ok=True)
@@ -42,8 +47,9 @@ class Crawler(object):
         while params:
             param = params.pop(0)
             url = URL_FORMAT.format(
+                conference=param["conference"],
                 year=param["year"],
-                ptype=self._make_ptype(param["ptype"]),  # "l" -> 1, "s" -> 2
+                ptype=param["ptype"],
                 pid=param["pid"])
             basename = os.path.basename(url)
             path_paper = os.path.join(tmp_dir, basename)
@@ -51,6 +57,7 @@ class Crawler(object):
             if ok == 0:  # success
                 _results.append({
                     "url": url,
+                    "conference": param["conference"],
                     "year": param["year"],
                     "ptype": param["ptype"],
                     "pid": param["pid"],
@@ -58,13 +65,15 @@ class Crawler(object):
                 self._delete_paper(path_paper)
             elif ok == 1:  # 404
                 while True:  # delete queues which has greater pids
+                    if len(params) == 0:
+                        return _results
+
                     next_param = params[0]
-                    if next_param["year"] == param["year"] \
+                    if next_param["conference"] == param["conference"] \
+                            and next_param["year"] == param["year"] \
                             and next_param["ptype"] == param["ptype"] \
                             and next_param["pid"] > param["pid"]:
                         params.pop(0)
-                        if len(params) == 0:
-                            return _results
                     else:
                         break
             else:  # something wrong
@@ -128,16 +137,17 @@ class Crawler(object):
             os.remove(path)
 
     @staticmethod
-    def _make_ptype(ptype):
-        if ptype == "l":
-            return "1"
-        elif ptype == "s":
-            return "2"
-
-    @staticmethod
     def _make_chunks(params, words, tmp_dir, n):
         if n < 1:
             print("Invalid parallelism.")
             sys.exit(1)
         n_chunk = len(params) // n
         return [(params[i:n_chunk+i], words, tmp_dir) for i in range(0, len(params), n_chunk)]
+
+    @staticmethod
+    def replace_conferences(inp):
+        return inp.replace("naacl", "N").replace("emnlp", "D").replace("acl", "P")
+
+    @staticmethod
+    def replace_ptype(inp):
+        return inp.replace("l", "1").replace("s", "2")
