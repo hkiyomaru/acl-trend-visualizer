@@ -30,6 +30,7 @@ The output for `wordlist-dltools.txt` is also in the `data` directory.
 
 ```
 $ python src/run_crawler.py data/wordlist-dltools.txt \
+--conference acl,naacl,emnlp \  # the name of conferences
 --year 16,17,18 \  # the year of conferences
 --type ls \  # the type of submission ("l" and "s" indicate long and short paper respectively)
 --out data/result-dltools.json  # the output will be given as a json file
