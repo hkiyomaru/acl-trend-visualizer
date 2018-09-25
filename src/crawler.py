@@ -5,6 +5,7 @@ import os
 import sys
 
 import requests
+import timeout_decorator
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.converter import TextConverter
@@ -12,6 +13,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
 
+TIMEOUT = 180
 URL_FORMAT = "http://aclweb.org/anthology/{conference}{year}-{ptype}{pid:03d}"
 
 
@@ -85,6 +87,7 @@ class Crawler(object):
         def build_ngram(l, n):
             return [' '.join(ngram) for ngram in list(zip(*(l[i:] for i in range(n))))]
 
+        @timeout_decorator.timeout(TIMEOUT)
         def convert_pdf_to_text(_path):
             with open(_path, "rb") as f:
                 resource_manager = PDFResourceManager()
