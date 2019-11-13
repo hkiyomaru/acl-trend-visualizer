@@ -29,18 +29,18 @@ Crawling ACL Anthology, you will get a json file which include the information o
 The output for `wordlist-dltools.txt` is also in the `data` directory.
 
 ```
-$ python src/run_crawler.py data/wordlist-dltools.txt \
+$ python crawl.py data/wordlist-dltools.txt \
 --conference acl,naacl,emnlp \  # the name of conferences
 --year 16,17,18 \  # the year of conferences
 --type ls \  # the type of submission ("l" and "s" indicate long and short paper respectively)
 --out data/result-dltools.json  # the output will be given as a json file
---jobs 100  # number of jobs
+--jobs 20  # number of jobs
 ```
 
 Finally, run the following script to visualize the result.
 
 ```
-$ python src/run_visualizer.py data/word-list-dltools.txt  data/result-dltools.json \
+$ python visualize.py data/word-list-dltools.txt  data/result-dltools.json \
 --output data/pointplot-dltools.png
 ```
 
@@ -51,11 +51,3 @@ The result for `data/wordlist-tasks.txt` is:
 ![pointplot-tasks.png](./data/pointplot-tasks.png)
 
 See command line help for other options.
-
-## Why don't you use Google Custom Search API?
-
-Because it costs money.
-
-## TODO
-
-- deal with other related conferences such as NAACL, EMNLP, and so on.
