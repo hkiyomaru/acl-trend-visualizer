@@ -5,7 +5,7 @@ idna==2.7
 jsonlines==1.2.0
 kiwisolver==1.0.1
 matplotlib==3.0.0
-numpy==1.15.1
+numpy==1.22.0
 pandas==0.23.4
 pdfminer.six==20191110
 pycryptodome==3.6.6
